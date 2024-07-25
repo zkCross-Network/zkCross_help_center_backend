@@ -12,12 +12,15 @@ export const formSubmit = async (req:Request,res:Response,next:NextFunction)=>{
         }
         const emailText = emailTemplate({...req.body});
         await Service.sendMail(emailText);
+        if(blockchain !== "Partisia"){
+            return res.status(200).json({success: true,message:"email sent successfully" })
+        }
         let telegramMessage = 'Help Center Message\n — — — — — — — — — — — \n'
         for(let field in req.body){
             telegramMessage+=`${field}: ${req.body[field]}\n`
         }
         sendMessageToChannel(telegramMessage)
-        res.status(200).json({success:true,message:"email sent successfully"});
+        res.status(200).json({success:true,message:"email and telegram message sent successfully"});
     }
     catch(err:any){
         res.status(500).json({success:false,message:err.message})
