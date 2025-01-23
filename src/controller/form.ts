@@ -15,7 +15,6 @@ export const formSubmit = async (
       !(
         sanitizeString(email) &&
         sanitizeString(request_type) &&
-        sanitizeString(blockchain) &&
         sanitizeString(message)
       )
     ) {
