@@ -1,9 +1,10 @@
-export interface formData{
-    email:string;
-    product:string;
-    blockchain:string;
-    address:string;
-    message:string;
-    username?:string;
-    txnHash?:string
+export interface formData {
+  email: string;
+  request_type: string;
+  blockchain: string;
+  address?: string | undefined;
+  message: string;
+  username?: string;
+  transhash?: string;
+  dashboard?: string;
 }
