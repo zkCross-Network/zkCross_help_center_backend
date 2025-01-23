@@ -6,12 +6,8 @@ export const emailTemplate = (formData: formData) => {
     formData.dashboard
   }\nRequest Type: ${formData.request_type}\nBlockchain: ${
     formData.blockchain
-  }\nWallet Address: ${sanitizeString(
-    formData.address!
-  )}\nMessage: ${sanitizeString(formData.message)}\n${
-    formData.transhash
-      ? "TxnHash: " + sanitizeString(formData.transhash) + "\n"
-      : ""
+  }\nWallet Address: ${formData.address!}\nMessage: ${formData.message}\n${
+    formData.transhash ? "TxnHash: " + formData.transhash + "\n" : ""
   }
     `;
 };
