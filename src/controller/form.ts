@@ -24,11 +24,7 @@ export const formSubmit = async (
     }
     const emailText = emailTemplate({ ...req.body });
     await Service.sendMail(emailText);
-    if (blockchain !== "Partisia") {
-      return res
-        .status(200)
-        .json({ success: true, message: "email sent successfully" });
-    }
+
     let telegramMessage = "Help Center Message\n — — — — — — — — — — — \n";
     for (let field in req.body) {
       telegramMessage += `${field}: ${req.body[field]}\n`;
