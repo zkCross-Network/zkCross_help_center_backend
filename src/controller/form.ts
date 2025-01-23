@@ -10,11 +10,11 @@ export const formSubmit = async (
   next: NextFunction
 ) => {
   try {
-    const { email, product, blockchain, address, message } = req.body;
+    const { email, request_type, blockchain, address, message } = req.body;
     if (
       !(
         sanitizeString(email) &&
-        sanitizeString(product) &&
+        sanitizeString(request_type) &&
         sanitizeString(blockchain) &&
         sanitizeString(message)
       )
