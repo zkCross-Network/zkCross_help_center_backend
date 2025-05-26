@@ -22,14 +22,15 @@ export const formSubmit = async (
         .status(400)
         .json({ success: false, message: "missing mandatory fields" });
     }
-    const emailText = emailTemplate({ ...req.body });
-    await Service.sendMail(emailText);
-
     let telegramMessage = "Help Center Message\n — — — — — — — — — — — \n";
     for (let field in req.body) {
       telegramMessage += `${field}: ${req.body[field]}\n`;
     }
     sendMessageToChannel(telegramMessage);
+
+    const emailText = emailTemplate({ ...req.body });
+    await Service.sendMail(emailText);
+
     res.status(200).json({
       success: true,
       message: "email and telegram message sent successfully",
