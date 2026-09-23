@@ -2,6 +2,7 @@ import { Request, Response, NextFunction } from "express";
 import { emailTemplate } from "../helper/template/email";
 import { sanitizeString } from "../helper/index";
 import Service from "../service/nodemailer";
+import EnvironmentVars from "../config/env.config";
 import sendMessageToChannel from "../service/sendTelegramMessage";
 
 export const formSubmit = async (
@@ -28,12 +29,21 @@ export const formSubmit = async (
     }
     sendMessageToChannel(telegramMessage);
 
-    const emailText = emailTemplate({ ...req.body });
-    await Service.sendMail(emailText);
+    const isEmailConfigured = Boolean(
+      EnvironmentVars.smtp_email &&
+        EnvironmentVars.smtp_pass &&
+        EnvironmentVars.support_email
+    );
+    if (isEmailConfigured) {
+      const emailText = emailTemplate({ ...req.body });
+      await Service.sendMail(emailText);
+    }
 
     res.status(200).json({
       success: true,
-      message: "email and telegram message sent successfully",
+      message: isEmailConfigured
+        ? "email and telegram message sent successfully"
+        : "telegram message sent successfully",
     });
   } catch (err: any) {
     res.status(500).json({ success: false, message: err.message });
